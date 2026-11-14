@@ -848,7 +848,7 @@ function drawAcorn(a) {
 }
 
 function drawMound(m) {
-  // moss mound: the bounce-bush sits on its cell and grows upward
+ 
   ctx.drawImage(IMG.ruins, 13 * 16, 10 * 16, 48, 32,
                 Math.round(m.x - camX - 72), Math.round(m.bottom - camY - 96), 144, 96);
 }
@@ -867,7 +867,7 @@ function drawDen(gl) {
   ctx.beginPath();
   ctx.arc(0, 0, 13, Math.PI, 0);
   ctx.fill();
-  ctx.fillStyle = locked ? "#7b7077" : "#4f8a2a";              // leaves on top
+  ctx.fillStyle = locked ? "#7b7077" : "#4f8a2a";             
   ctx.beginPath();
   ctx.ellipse(-16, -30, 12, 6, -0.5, 0, TAU);
   ctx.ellipse(12, -32, 12, 6, 0.4, 0, TAU);
@@ -1042,7 +1042,7 @@ function draw() {
   if (staticAmt > 0) drawStatic();
 }
 
-// ---------- input ----------
+
 window.addEventListener("keydown", (e) => {
   if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Space"].includes(e.code)) e.preventDefault();
   initAudio();
@@ -1069,14 +1069,14 @@ window.addEventListener("keyup", (e) => {
 
 window.addEventListener("blur", () => { keys.left = false; keys.right = false; });
 
-// ---------- scale the TV to fit the window ----------
+
 function fit() {
   const s = Math.min(window.innerWidth / 1120, (window.innerHeight - 30) / 760, 1);
   document.getElementById("tv").style.transform = `scale(${s})`;
 }
 window.addEventListener("resize", fit);
 
-// ---------- main loop ----------
+
 let lastT = performance.now();
 function frame(now) {
   const dt = Math.min(0.033, (now - lastT) / 1000);
