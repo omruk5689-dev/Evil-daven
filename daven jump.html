@@ -66,7 +66,7 @@
 <div id="hint">Arrows or A/D move &middot; Space jump &middot; ] [ volume &middot; M mute &middot; R reset</div>
 
 <script>
-// ---------- settings ----------
+
 const TILE = 48, SW = 960, SH = 540;
 const FONT = '"Trebuchet MS", Verdana, Arial, sans-serif';
 const TAU = Math.PI * 2;
@@ -101,7 +101,7 @@ const MOSS_JOKES = [
 const LOCKED_JOKE = "The den is locked. Stomp the moss monster four times first!";
 const LEAF_COLORS = ["#e0701b", "#c23b22", "#f2a93b", "#8a3b12", "#d9832a"];
 
-// ---------- art (all embedded in this file) ----------
+
 const SRC = {
   move: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAAAYCAMAAAAie4Q/AAAAGFBMVEUAAAAAAAA2GRReLB16OiqMTDjPk2veuqIazcOfAAAACHRSTlMA/////////9XKVDIAAAC8SURBVEiJ7ZXRDoUgDEPp2PT//9h1U4K+3odxEzoCySkujUFpbWtra2vrTwQWVuHOFAZT2itwhXa17pPbC3Az5dBuXopy7gl7QI3lccq4aCAfwuoiqOQjqTyF+9DXcWFMMoYEjuNAIU9HSBnS6YkTpVwyZOLTlUYVj6QIJaYUhdwdvrBJ43QVcToiYgauNl0sxPDflyHsN0+MFyeMA+rL3Id774fGx/3wxJh5tMp4wBfnhLdxo4bvxfh7nwunVBDHwPW/IAAAAABJRU5ErkJggg==",
   idle: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAYCAMAAACLI47uAAAAGFBMVEUAAAAAAAA2GRReLB16OiqMTDjPk2veuqIazcOfAAAACHRSTlMA/////////9XKVDIAAACUSURBVDiN7dLhDoMgDARgr1zh/d94PRB1GTD+bwUl+ZqcIh7Hv36soIFdDyMcTrV3nGCip7hFe8PdqcnkMYivHgmpIuvSO1M3VoppGskMK7+SrA+cH2XuphiZQoCcMxbeOiZVSGhBwdKthTQuUa0xcvYk1GqsIsbed60HPura3Yc/TsjjDQx1uY905srCeb3/aAN/AdmTBZyrgNcwAAAAAElFTkSuQmCC",
@@ -126,10 +126,10 @@ function loadImages() {
   })));
 }
 
-// ---------- sound (made with the Web Audio API, no files) ----------
+
 let actx = null, master = null, noiseBuf = null;
 
-// Browsers only allow sound after a key press, so this runs on the first key.
+
 function initAudio() {
   if (!actx) {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -183,12 +183,11 @@ const SFX = {
   squish: () => beep(300, 120, 0.2, "square", 0.15)
 };
 
-// ---------- state ----------
+
 let volume = 6, muted = false, resets = 0;
-let wallet = 0;                       // acorns collected in total (kept across levels and resets)
-const counted = new Set();            // acorns already added to the wallet, so resets can't farm them
+let wallet = 0;                      
 let levelIdx = 0, state = "title", token = 0;
-let L = null;                         // current level
+let L = null;                        
 let player = null;
 let camX = 0, camY = 0, staticAmt = 0, clockT = 0;
 let keys = { left: false, right: false };
@@ -207,7 +206,7 @@ noiseCanvas.width = 320;
 noiseCanvas.height = 180;
 const nctx = noiseCanvas.getContext("2d");
 
-// ---------- helpers ----------
+
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function approach(v, target, step) {
@@ -237,9 +236,9 @@ function refreshTV() {
   document.getElementById("led").className = muted ? "off" : "";
 }
 
-// ---------- drawing the level into one canvas ----------
+
 function ruinsTile(g, col, row, dx, dy) {
-  // 16px tiles from the ruins tileset, drawn at 3x so they match the rest of the art
+
   g.drawImage(IMG.ruins, col * 16, row * 16, 16, 16, dx, dy, TILE, TILE);
 }
 
@@ -248,7 +247,7 @@ function kenneyTile(g, idx, dx, dy, size) {
 }
 
 function drawLeafPad(g, dx, dy, x) {
-  // a row of autumn leaves for the platforms in the leaf level
+  
   g.save();
   g.translate(dx + TILE / 2, dy + 10);
   g.rotate((x % 2 ? -1 : 1) * 0.08);
@@ -265,7 +264,7 @@ function drawLeafPad(g, dx, dy, x) {
   g.restore();
 }
 
-// ---------- building a level ----------
+
 function walker(kind, x, y, w, h, hp, speed, chase) {
   return { kind, x, y, ox: x, oy: y, w, h, hp, maxHp: hp, speed, chase, span: 150,
            dir: Math.random() < 0.5 ? -1 : 1, face: 1, dead: false, dying: 0, hurtT: 0 };
@@ -295,18 +294,18 @@ function buildLevel(i) {
       if (c === "#") {
         const above = cellAt(x, y - 1);
         const col = 8 + (x % 6);
-        if (y === H - 1) ruinsTile(g, col, 3, dx, dy);                              // dark base
-        else if (above === "#" || above === "=") ruinsTile(g, col, 2, dx, dy);     // soil body
-        else { ruinsTile(g, col, 2, dx, dy); ruinsTile(g, col, 1, dx, dy - 6); }  // mossy top, raised a little
+        if (y === H - 1) ruinsTile(g, col, 3, dx, dy);                             
+        else if (above === "#" || above === "=") ruinsTile(g, col, 2, dx, dy);     
+        else { ruinsTile(g, col, 2, dx, dy); ruinsTile(g, col, 1, dx, dy - 6); }  
       } else if (c === "=") {
         if (d.leaves) {
           drawLeafPad(g, dx, dy, x);
         } else {
           const above = cellAt(x, y - 1);
-          ruinsTile(g, 5 + (x % 6), (above === "=" || above === "#") ? 16 : 15, dx, dy);  // stone ledge
+          ruinsTile(g, 5 + (x % 6), (above === "=" || above === "#") ? 16 : 15, dx, dy);  
         }
       } else if (c === "M") {
-        kenneyTile(g, 128, dx + (TILE - 54) / 2, dy + TILE - 54, 54);              // mushroom bounce
+        kenneyTile(g, 128, dx + (TILE - 54) / 2, dy + TILE - 54, 54);              
       }
     }
   }
@@ -343,15 +342,15 @@ function buildLevel(i) {
   };
 }
 
-// ---------- physics (positions are box centres, in pixels) ----------
+
 function cell(tx, ty) {
-  if (tx < 0 || tx >= L.W) return "#";   // invisible walls at both sides
-  if (ty < 0 || ty >= L.H) return ".";   // open sky above, pits below
+  if (tx < 0 || tx >= L.W) return "#";  
+  if (ty < 0 || ty >= L.H) return ".";  
   return L.rows[ty][tx];
 }
 function blocks(c) { return c === "#" || c === "=" || c === "M" || c === "U"; }
 
-// Looks just under the feet. Returns the tile that is there (and its row), or null.
+
 function groundAt(p) {
   const ty = Math.floor((p.y + p.h / 2 + 2) / TILE);
   const tx0 = Math.floor((p.x - p.w / 2 + 3) / TILE);
