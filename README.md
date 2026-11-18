@@ -1,7 +1,7 @@
 # DAVEN JUMP
 
-### a g
-ame foe haven 
+### a game for 
+
 > Daven is a hedgehog who got stuck inside a retro TV. Every channel is a haunted, mossy forest
 > full of villains, mud and spiky chestnuts that would really like him to go away.
 > All he wants is his den, and maybe a few acorns on the way.
