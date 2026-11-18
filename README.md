@@ -29,7 +29,7 @@ The only way through is up, down, and bouncing back.
 - **Stomp** on villains from above. Touching one from the side hurts.
 - **Fall in a pit?** You'll pop back to the start, no hard feelings.
 - **Reach the den** to finish the channel.
-- **Beat the Moss Monster** (four stomps) to unlock the den on the last channel.
+- **Beat the Moss Monster** (four stomps) to unlock the den on the last channel
 
 ### Controls
 
