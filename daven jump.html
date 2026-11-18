@@ -421,7 +421,7 @@ function updatePlayer(dt) {
   }
   jumpQueued = false;
 
-  const accel = L.mud ? 360 : 2400;   
+  const accel = L.mud ? 365 : 2400;   
   p.vx = approach(p.vx, dir * 260, accel * dt);
   if (!p.onFloor) p.vy += 1800 * L.gravity * dt;
 
